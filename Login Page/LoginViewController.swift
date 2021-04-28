@@ -33,10 +33,13 @@ class LoginViewController: UIViewController {
     }
     
     @objc func tapButton(_ sender: Any) {
-        let user = username.text
-        let mail = email.text
-        let pass = password.text
-        let login = Login(username: user!, email : mail!, password : pass!)
+//        let user = username.text
+//        let mail = email.text
+//        let pass = password.text
+        let user = "sc17gt"
+        let mail = "sc17gt@leeds.ac.uk"
+        let pass = "hellothere123"
+        let login = Login(username: user, email : mail, password : pass)
         guard let uploadData = try? JSONEncoder().encode(login) else {
             return
         }
