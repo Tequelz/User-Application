@@ -2,7 +2,6 @@
 //  AppDelegate.swift
 //  Login Page
 //
-//  Created by John Doe on 22/04/2021.
 //
 
 import UIKit

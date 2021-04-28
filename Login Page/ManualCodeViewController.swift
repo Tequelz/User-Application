@@ -2,7 +2,6 @@
 //  ManualCodeViewController.swift
 //  Login Page
 //
-//  Created by John Doe on 24/04/2021.
 //
 
 import UIKit

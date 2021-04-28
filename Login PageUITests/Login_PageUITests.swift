@@ -2,7 +2,6 @@
 //  Login_PageUITests.swift
 //  Login PageUITests
 //
-//  Created by John Doe on 22/04/2021.
 //
 
 import XCTest
