@@ -39,7 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7F7F19D52632157E00144312 /* Login Page.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Login Page.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F7F19D52632157E00144312 /* QR User App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QR User App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F7F19D82632157E00144312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F7F19DA2632157E00144312 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		7F7F19DC2632157E00144312 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,10 +47,10 @@
 		7F7F19E12632157F00144312 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F7F19E42632157F00144312 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F7F19E62632157F00144312 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7F7F19EB2632157F00144312 /* Login PageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Login PageTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F7F19EB2632157F00144312 /* QR User AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "QR User AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F7F19EF2632157F00144312 /* Login_PageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login_PageTests.swift; sourceTree = "<group>"; };
 		7F7F19F12632157F00144312 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7F7F19F62632157F00144312 /* Login PageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Login PageUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F7F19F62632157F00144312 /* QR User AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "QR User AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F7F19FA2632157F00144312 /* Login_PageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login_PageUITests.swift; sourceTree = "<group>"; };
 		7F7F19FC2632157F00144312 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F7F1A1326321EFA00144312 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -87,9 +87,9 @@
 		7F7F19CC2632157E00144312 = {
 			isa = PBXGroup;
 			children = (
-				7F7F19D72632157E00144312 /* Login Page */,
-				7F7F19EE2632157F00144312 /* Login PageTests */,
-				7F7F19F92632157F00144312 /* Login PageUITests */,
+				7F7F19D72632157E00144312 /* QR User App */,
+				7F7F19EE2632157F00144312 /* QR User App PageTests */,
+				7F7F19F92632157F00144312 /* QR User App PageUITests */,
 				7F7F19D62632157E00144312 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,14 +97,14 @@
 		7F7F19D62632157E00144312 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7F7F19D52632157E00144312 /* Login Page.app */,
-				7F7F19EB2632157F00144312 /* Login PageTests.xctest */,
-				7F7F19F62632157F00144312 /* Login PageUITests.xctest */,
+				7F7F19D52632157E00144312 /* QR User App.app */,
+				7F7F19EB2632157F00144312 /* QR User AppTests.xctest */,
+				7F7F19F62632157F00144312 /* QR User AppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7F7F19D72632157E00144312 /* Login Page */ = {
+		7F7F19D72632157E00144312 /* QR User App */ = {
 			isa = PBXGroup;
 			children = (
 				7F7F19D82632157E00144312 /* AppDelegate.swift */,
@@ -119,33 +119,33 @@
 				7F7F1A1826322E4200144312 /* RegisterViewController.swift */,
 				7F7F1A1D2634D97000144312 /* ManualCodeViewController.swift */,
 			);
-			path = "Login Page";
+			path = "QR User App";
 			sourceTree = "<group>";
 		};
-		7F7F19EE2632157F00144312 /* Login PageTests */ = {
+		7F7F19EE2632157F00144312 /* QR User App PageTests */ = {
 			isa = PBXGroup;
 			children = (
 				7F7F19EF2632157F00144312 /* Login_PageTests.swift */,
 				7F7F19F12632157F00144312 /* Info.plist */,
 			);
-			path = "Login PageTests";
+			path = "QR User App PageTests";
 			sourceTree = "<group>";
 		};
-		7F7F19F92632157F00144312 /* Login PageUITests */ = {
+		7F7F19F92632157F00144312 /* QR User App PageUITests */ = {
 			isa = PBXGroup;
 			children = (
 				7F7F19FA2632157F00144312 /* Login_PageUITests.swift */,
 				7F7F19FC2632157F00144312 /* Info.plist */,
 			);
-			path = "Login PageUITests";
+			path = "QR User App PageUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7F7F19D42632157E00144312 /* Login Page */ = {
+		7F7F19D42632157E00144312 /* QR User App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7F7F19FF2632157F00144312 /* Build configuration list for PBXNativeTarget "Login Page" */;
+			buildConfigurationList = 7F7F19FF2632157F00144312 /* Build configuration list for PBXNativeTarget "QR User App" */;
 			buildPhases = (
 				7F7F19D12632157E00144312 /* Sources */,
 				7F7F19D22632157E00144312 /* Frameworks */,
@@ -155,14 +155,14 @@
 			);
 			dependencies = (
 			);
-			name = "Login Page";
+			name = "QR User App";
 			productName = "Login Page";
-			productReference = 7F7F19D52632157E00144312 /* Login Page.app */;
+			productReference = 7F7F19D52632157E00144312 /* QR User App.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7F7F19EA2632157F00144312 /* Login PageTests */ = {
+		7F7F19EA2632157F00144312 /* QR User AppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7F7F1A022632157F00144312 /* Build configuration list for PBXNativeTarget "Login PageTests" */;
+			buildConfigurationList = 7F7F1A022632157F00144312 /* Build configuration list for PBXNativeTarget "QR User AppTests" */;
 			buildPhases = (
 				7F7F19E72632157F00144312 /* Sources */,
 				7F7F19E82632157F00144312 /* Frameworks */,
@@ -173,14 +173,14 @@
 			dependencies = (
 				7F7F19ED2632157F00144312 /* PBXTargetDependency */,
 			);
-			name = "Login PageTests";
+			name = "QR User AppTests";
 			productName = "Login PageTests";
-			productReference = 7F7F19EB2632157F00144312 /* Login PageTests.xctest */;
+			productReference = 7F7F19EB2632157F00144312 /* QR User AppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		7F7F19F52632157F00144312 /* Login PageUITests */ = {
+		7F7F19F52632157F00144312 /* QR User AppUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7F7F1A052632157F00144312 /* Build configuration list for PBXNativeTarget "Login PageUITests" */;
+			buildConfigurationList = 7F7F1A052632157F00144312 /* Build configuration list for PBXNativeTarget "QR User AppUITests" */;
 			buildPhases = (
 				7F7F19F22632157F00144312 /* Sources */,
 				7F7F19F32632157F00144312 /* Frameworks */,
@@ -191,9 +191,9 @@
 			dependencies = (
 				7F7F19F82632157F00144312 /* PBXTargetDependency */,
 			);
-			name = "Login PageUITests";
+			name = "QR User AppUITests";
 			productName = "Login PageUITests";
-			productReference = 7F7F19F62632157F00144312 /* Login PageUITests.xctest */;
+			productReference = 7F7F19F62632157F00144312 /* QR User AppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -218,7 +218,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7F7F19D02632157E00144312 /* Build configuration list for PBXProject "Login Page" */;
+			buildConfigurationList = 7F7F19D02632157E00144312 /* Build configuration list for PBXProject "QR User App" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -231,9 +231,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7F7F19D42632157E00144312 /* Login Page */,
-				7F7F19EA2632157F00144312 /* Login PageTests */,
-				7F7F19F52632157F00144312 /* Login PageUITests */,
+				7F7F19D42632157E00144312 /* QR User App */,
+				7F7F19EA2632157F00144312 /* QR User AppTests */,
+				7F7F19F52632157F00144312 /* QR User AppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -301,12 +301,12 @@
 /* Begin PBXTargetDependency section */
 		7F7F19ED2632157F00144312 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7F7F19D42632157E00144312 /* Login Page */;
+			target = 7F7F19D42632157E00144312 /* QR User App */;
 			targetProxy = 7F7F19EC2632157F00144312 /* PBXContainerItemProxy */;
 		};
 		7F7F19F82632157F00144312 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7F7F19D42632157E00144312 /* Login Page */;
+			target = 7F7F19D42632157E00144312 /* QR User App */;
 			targetProxy = 7F7F19F72632157F00144312 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -382,7 +382,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -437,7 +437,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -454,7 +454,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F2MDS45FQU;
-				INFOPLIST_FILE = "Login Page/Info.plist";
+				INFOPLIST_FILE = "QR User App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -473,7 +473,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F2MDS45FQU;
-				INFOPLIST_FILE = "Login Page/Info.plist";
+				INFOPLIST_FILE = "QR User App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -503,7 +503,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Login Page.app/Login Page";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QR User App.app/QR User App";
 			};
 			name = Debug;
 		};
@@ -525,7 +525,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Login Page.app/Login Page";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QR User App.app/QR User App";
 			};
 			name = Release;
 		};
@@ -572,7 +572,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7F7F19D02632157E00144312 /* Build configuration list for PBXProject "Login Page" */ = {
+		7F7F19D02632157E00144312 /* Build configuration list for PBXProject "QR User App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7F7F19FD2632157F00144312 /* Debug */,
@@ -581,7 +581,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7F7F19FF2632157F00144312 /* Build configuration list for PBXNativeTarget "Login Page" */ = {
+		7F7F19FF2632157F00144312 /* Build configuration list for PBXNativeTarget "QR User App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7F7F1A002632157F00144312 /* Debug */,
@@ -590,7 +590,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7F7F1A022632157F00144312 /* Build configuration list for PBXNativeTarget "Login PageTests" */ = {
+		7F7F1A022632157F00144312 /* Build configuration list for PBXNativeTarget "QR User AppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7F7F1A032632157F00144312 /* Debug */,
@@ -599,7 +599,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7F7F1A052632157F00144312 /* Build configuration list for PBXNativeTarget "Login PageUITests" */ = {
+		7F7F1A052632157F00144312 /* Build configuration list for PBXNativeTarget "QR User AppUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7F7F1A062632157F00144312 /* Debug */,
