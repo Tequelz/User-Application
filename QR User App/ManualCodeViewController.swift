@@ -16,11 +16,21 @@ struct AuthKey: Decodable {
     
 }
 
+struct LectureData: Codable{
+    
+    let lec_id: Int
+    let lec_num: Int
+    let lec_len:Int
+}
+
+
 struct UserAttend: Codable{
     
     let username: Int
-    let lesson_id: Int
+    let lecture_id: Int
 }
+
+
 
 
 class ManualCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
@@ -46,7 +56,7 @@ class ManualCodeViewController: UIViewController, AVCaptureMetadataOutputObjects
     
     var key:String = ""
     
-    var lessonID:Int = 0
+    var lecture_id:Int = 0
     
     var userID:Int = 0
 
@@ -213,22 +223,23 @@ class ManualCodeViewController: UIViewController, AVCaptureMetadataOutputObjects
                 self.lowerBanner.text = stringValue
             }
             
-            
             let qrCodeObject = self.previewLayer?.transformedMetadataObject(for: readableObject)
             self.showQRCodeBounds(frame: qrCodeObject?.bounds)
             
             
-            lessonID = Int(stringValue)!
+            let jsonData = stringValue.data(using: .utf8)!
+            let lecData: LectureData = try! JSONDecoder().decode(LectureData.self, from: jsonData)
+            print(lecData)
             
-            print(lessonID)
-            
-            let userAttend = UserAttend(username:self.userID, lesson_id: lessonID)
-            
-            guard let uploadData = try? JSONEncoder().encode(userAttend)else{
+            guard let uploadData = try? JSONEncoder().encode(lecData)else{
                 return
             }
             
-            let url = URL(string: "https://project-api-sc17gt.herokuapp.com/user-attend/")!
+            
+
+            
+            
+            let url = URL(string: "https://project-api-sc17gt.herokuapp.com/lecture-check/")!
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -247,16 +258,59 @@ class ManualCodeViewController: UIViewController, AVCaptureMetadataOutputObjects
                 if let mimeType = response.mimeType,
                     mimeType == "application/json",
                     let data = data,
-                    let dataString = String(data: data, encoding: .utf8) {
-                    print ("got data: \(dataString)")
-                    DispatchQueue.main.async {
-                        self.successfulLogin()
-                        let story = UIStoryboard(name: "Main",bundle:nil)
-                        let controller = story.instantiateViewController(identifier: "LoggedIn") as! UIViewController
-                        let navigation = UINavigationController(rootViewController: controller)
-                        self.view.addSubview(navigation.view)
-                        self.addChild(navigation)
-                        navigation.didMove(toParent: self)
+                    let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments){
+                    if let jsonArray = jsonObj as? NSArray{
+                        for obj in jsonArray{
+                            if let objDict = obj as? NSDictionary{
+                                if let lecture_id = objDict.value(forKey: "pk"){
+                                self.lecture_id = lecture_id as! Int
+                                    print(self.lecture_id)
+                                    
+                                    let userAttend = UserAttend(username:self.userID, lecture_id: self.lecture_id)
+                                    print(userAttend)
+                                    
+                                    guard let uploadData = try? JSONEncoder().encode(userAttend)else{
+                                        return
+                                    }
+                                    print(uploadData)
+                                    
+                                    let url = URL(string: "https://project-api-sc17gt.herokuapp.com/user-attend/")!
+                                    var request = URLRequest(url: url)
+                                    request.httpMethod = "POST"
+                                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                                    request.setValue("Token " + authKey.key, forHTTPHeaderField: "Authorization")
+                                    
+                                    let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
+                                        if let error = error {
+                                            print ("error: \(error)")
+                                            return
+                                        }
+                                        guard let response = response as? HTTPURLResponse,
+                                            (200...299).contains(response.statusCode) else {
+                                            print ("server error")
+                                            return
+                                        }
+                                        if let mimeType = response.mimeType,
+                                            mimeType == "application/json",
+                                            let data = data,
+                                            let dataString = String(data: data, encoding: .utf8) {
+                                            print ("got data: \(dataString)")
+                                            DispatchQueue.main.async {
+                                                self.successfulLogin()
+                                                let story = UIStoryboard(name: "Main",bundle:nil)
+                                                let controller = story.instantiateViewController(identifier: "LoggedIn") as! UIViewController
+                                                let navigation = UINavigationController(rootViewController: controller)
+                                                self.view.addSubview(navigation.view)
+                                                self.addChild(navigation)
+                                                navigation.didMove(toParent: self)
+                                            }
+                                        }
+                                    }
+                                    task.resume()
+                                }
+
+                            }
+                        }
                     }
                 }
             }
