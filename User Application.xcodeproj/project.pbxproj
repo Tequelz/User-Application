@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F31499B263EEE7700CBFF21 /* TechChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F31499A263EEE7700CBFF21 /* TechChoiceViewController.swift */; };
 		7F7F19D92632157E00144312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F19D82632157E00144312 /* AppDelegate.swift */; };
 		7F7F19DB2632157E00144312 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F19DA2632157E00144312 /* SceneDelegate.swift */; };
 		7F7F19DD2632157E00144312 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F19DC2632157E00144312 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 		7F7F1A1426321EFA00144312 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1A1326321EFA00144312 /* LoginViewController.swift */; };
 		7F7F1A1926322E4200144312 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1A1826322E4200144312 /* RegisterViewController.swift */; };
 		7F7F1A1E2634D97000144312 /* ScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1A1D2634D97000144312 /* ScanQRViewController.swift */; };
+		7F9FC01C263EF81A002979A1 /* BTShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9FC01B263EF81A002979A1 /* BTShowViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F31499A263EEE7700CBFF21 /* TechChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechChoiceViewController.swift; sourceTree = "<group>"; };
 		7F7F19D52632157E00144312 /* User Application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "User Application.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F7F19D82632157E00144312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F7F19DA2632157E00144312 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +58,7 @@
 		7F7F1A1326321EFA00144312 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7F7F1A1826322E4200144312 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		7F7F1A1D2634D97000144312 /* ScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRViewController.swift; sourceTree = "<group>"; };
+		7F9FC01B263EF81A002979A1 /* BTShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTShowViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F31497B263EDE9D00CBFF21 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7F7F19DC2632157E00144312 /* ViewController.swift */,
+				7F7F1A1326321EFA00144312 /* LoginViewController.swift */,
+				7F7F1A1826322E4200144312 /* RegisterViewController.swift */,
+				7F7F1A1D2634D97000144312 /* ScanQRViewController.swift */,
+				7F31499A263EEE7700CBFF21 /* TechChoiceViewController.swift */,
+				7F9FC01B263EF81A002979A1 /* BTShowViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		7F7F19CC2632157E00144312 = {
 			isa = PBXGroup;
 			children = (
@@ -105,16 +122,13 @@
 		7F7F19D72632157E00144312 /* User Application */ = {
 			isa = PBXGroup;
 			children = (
+				7F31497B263EDE9D00CBFF21 /* Controllers */,
 				7F7F19D82632157E00144312 /* AppDelegate.swift */,
 				7F7F19DA2632157E00144312 /* SceneDelegate.swift */,
-				7F7F19DC2632157E00144312 /* ViewController.swift */,
 				7F7F19DE2632157E00144312 /* Main.storyboard */,
 				7F7F19E12632157F00144312 /* Assets.xcassets */,
 				7F7F19E32632157F00144312 /* LaunchScreen.storyboard */,
 				7F7F19E62632157F00144312 /* Info.plist */,
-				7F7F1A1326321EFA00144312 /* LoginViewController.swift */,
-				7F7F1A1826322E4200144312 /* RegisterViewController.swift */,
-				7F7F1A1D2634D97000144312 /* ScanQRViewController.swift */,
 			);
 			path = "User Application";
 			sourceTree = "<group>";
@@ -270,9 +284,11 @@
 				7F7F1A1426321EFA00144312 /* LoginViewController.swift in Sources */,
 				7F7F1A1926322E4200144312 /* RegisterViewController.swift in Sources */,
 				7F7F19DD2632157E00144312 /* ViewController.swift in Sources */,
+				7F9FC01C263EF81A002979A1 /* BTShowViewController.swift in Sources */,
 				7F7F1A1E2634D97000144312 /* ScanQRViewController.swift in Sources */,
 				7F7F19D92632157E00144312 /* AppDelegate.swift in Sources */,
 				7F7F19DB2632157E00144312 /* SceneDelegate.swift in Sources */,
+				7F31499B263EEE7700CBFF21 /* TechChoiceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

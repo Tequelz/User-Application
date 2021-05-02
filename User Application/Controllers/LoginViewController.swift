@@ -46,8 +46,8 @@ class LoginViewController: UIViewController {
                         print ("got data: \(dataString)")
                         DispatchQueue.main.async {
                             let story = UIStoryboard(name: "Main",bundle:nil)
-                            let controller = story.instantiateViewController(identifier: "ScanQR") as! ScanQRViewController
-                            controller.key = dataString
+                            let controller = story.instantiateViewController(identifier: "TechChoice") as! TechChoiceViewController
+                                controller.key = dataString
                                 controller.modalPresentationStyle = .fullScreen
                                 controller.modalTransitionStyle = .crossDissolve
                                 self.present(controller, animated: true, completion: nil)
