@@ -5,6 +5,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     
     @IBOutlet var headerBanner: UIView!
     @IBOutlet var lowerBanner: UILabel!
+
     
     @IBOutlet weak var cameraContainerConstraint: NSLayoutConstraint!
     
