@@ -11,7 +11,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="QR_User_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Core" id="BYZ-38-t0r" customClass="ViewController" customModule="QR_User_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -28,7 +28,7 @@
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
                                 <connections>
-                                    <segue destination="pQH-tG-hTV" kind="show" id="Vuo-H0-Rlb"/>
+                                    <action selector="registerButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NB6-gm-iT8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="95l-zg-ism">
@@ -43,7 +43,7 @@
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
                                 <connections>
-                                    <segue destination="kkd-S1-pkx" kind="show" id="j5j-8L-t4C"/>
+                                    <action selector="loginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fDl-uq-D5U"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -66,9 +66,9 @@
         <!--Register View Controller-->
         <scene sceneID="B77-yd-bga">
             <objects>
-                <viewController id="pQH-tG-hTV" customClass="RegisterViewController" customModule="QR_User_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Register" id="pQH-tG-hTV" customClass="RegisterViewController" customModule="QR_User_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="okz-la-C3J" customClass="Re">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kne-RO-SXM">
@@ -154,9 +154,9 @@
         <!--Login View Controller-->
         <scene sceneID="zdm-7b-Lir">
             <objects>
-                <viewController id="kkd-S1-pkx" customClass="LoginViewController" customModule="QR_User_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Login" id="kkd-S1-pkx" customClass="LoginViewController" customModule="QR_User_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ORu-dQ-OTY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3XU-3S-1Lh">
@@ -222,11 +222,10 @@
             </objects>
             <point key="canvasLocation" x="1114.4927536231885" y="-404.46428571428572"/>
         </scene>
-        <!--Manual Code View Controller-->
+        <!--ScanQR View Controller-->
         <scene sceneID="IyC-hD-l4D">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7q2-tg-NdP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="ManualCodeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oAc-b0-urw" customClass="ManualCodeViewController" customModule="QR_User_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ScanQR" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oAc-b0-urw" customClass="ScanQRViewController" customModule="QR_User_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zwQ-me-2op">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -275,6 +274,7 @@
                         <outlet property="lowerBanner" destination="sDJ-34-o7R" id="Btk-Ry-Ef0"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7q2-tg-NdP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1982.608695652174" y="-404.46428571428572"/>
         </scene>

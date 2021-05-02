@@ -64,18 +64,14 @@ class LoginViewController: UIViewController {
                 let data = data,
                 let dataString = String(data: data, encoding: .utf8) {
                 print ("got data: \(dataString)")
-                
-                
-                
                 DispatchQueue.main.async {
-                
-                let story = UIStoryboard(name: "Main",bundle:nil)
-                let controller = story.instantiateViewController(identifier: "ManualCodeViewController") as! ManualCodeViewController
+                        
+                    let story = UIStoryboard(name: "Main",bundle:nil)
+                    let controller = story.instantiateViewController(identifier: "ScanQR") as! ScanQRViewController
                     controller.key = dataString
-                let navigation = UINavigationController(rootViewController: controller)
-                self.view.addSubview(navigation.view)
-                self.addChild(navigation)
-                navigation.didMove(toParent: self)
+                        controller.modalPresentationStyle = .fullScreen
+                        controller.modalTransitionStyle = .crossDissolve
+                        self.present(controller, animated: true, completion: nil)
                 }
             }
         }

@@ -19,8 +19,8 @@ struct AuthKey: Decodable {
 struct LectureData: Codable{
     
     let lec_id: Int
-    let lec_num: Int
-    let lec_len:Int
+    let lec_number: Int
+    let lec_length:Int
 }
 
 
@@ -33,7 +33,7 @@ struct UserAttend: Codable{
 
 
 
-class ManualCodeViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
 
     @IBOutlet var headerBanner: UIView!
@@ -295,14 +295,15 @@ class ManualCodeViewController: UIViewController, AVCaptureMetadataOutputObjects
                                             let data = data,
                                             let dataString = String(data: data, encoding: .utf8) {
                                             print ("got data: \(dataString)")
+                                            
                                             DispatchQueue.main.async {
-                                                self.successfulLogin()
+                                                    
                                                 let story = UIStoryboard(name: "Main",bundle:nil)
                                                 let controller = story.instantiateViewController(identifier: "LoggedIn") as! UIViewController
-                                                let navigation = UINavigationController(rootViewController: controller)
-                                                self.view.addSubview(navigation.view)
-                                                self.addChild(navigation)
-                                                navigation.didMove(toParent: self)
+                                                    controller.modalPresentationStyle = .fullScreen
+                                                    controller.modalTransitionStyle = .crossDissolve
+                                                    self.present(controller, animated: true, completion: nil)
+                                                self.successfulLogin()
                                             }
                                         }
                                     }

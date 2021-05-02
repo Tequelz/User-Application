@@ -61,6 +61,14 @@ class RegisterViewController: UIViewController {
                 let data = data,
                 let dataString = String(data: data, encoding: .utf8) {
                 print ("got data: \(dataString)")
+                DispatchQueue.main.async {
+                        
+                    let story = UIStoryboard(name: "Main",bundle:nil)
+                    let controller = story.instantiateViewController(identifier: "Core") as! ViewController
+                        controller.modalPresentationStyle = .fullScreen
+                        controller.modalTransitionStyle = .crossDissolve
+                        self.present(controller, animated: true, completion: nil)
+                }
             }
         }
         task.resume()

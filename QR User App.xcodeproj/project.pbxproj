@@ -17,7 +17,7 @@
 		7F7F19FB2632157F00144312 /* Login_PageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F19FA2632157F00144312 /* Login_PageUITests.swift */; };
 		7F7F1A1426321EFA00144312 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1A1326321EFA00144312 /* LoginViewController.swift */; };
 		7F7F1A1926322E4200144312 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1A1826322E4200144312 /* RegisterViewController.swift */; };
-		7F7F1A1E2634D97000144312 /* ManualCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1A1D2634D97000144312 /* ManualCodeViewController.swift */; };
+		7F7F1A1E2634D97000144312 /* ScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1A1D2634D97000144312 /* ScanQRViewController.swift */; };
 		7F7F1A332639DFEC00144312 /* MyCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1A322639DFEC00144312 /* MyCellTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,7 +55,7 @@
 		7F7F19FC2632157F00144312 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F7F1A1326321EFA00144312 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7F7F1A1826322E4200144312 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		7F7F1A1D2634D97000144312 /* ManualCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualCodeViewController.swift; sourceTree = "<group>"; };
+		7F7F1A1D2634D97000144312 /* ScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRViewController.swift; sourceTree = "<group>"; };
 		7F7F1A322639DFEC00144312 /* MyCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCellTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,7 +117,7 @@
 				7F7F19E62632157F00144312 /* Info.plist */,
 				7F7F1A1326321EFA00144312 /* LoginViewController.swift */,
 				7F7F1A1826322E4200144312 /* RegisterViewController.swift */,
-				7F7F1A1D2634D97000144312 /* ManualCodeViewController.swift */,
+				7F7F1A1D2634D97000144312 /* ScanQRViewController.swift */,
 			);
 			path = "QR User App";
 			sourceTree = "<group>";
@@ -274,7 +274,7 @@
 				7F7F1A1926322E4200144312 /* RegisterViewController.swift in Sources */,
 				7F7F19DD2632157E00144312 /* ViewController.swift in Sources */,
 				7F7F1A332639DFEC00144312 /* MyCellTableViewCell.swift in Sources */,
-				7F7F1A1E2634D97000144312 /* ManualCodeViewController.swift in Sources */,
+				7F7F1A1E2634D97000144312 /* ScanQRViewController.swift in Sources */,
 				7F7F19D92632157E00144312 /* AppDelegate.swift in Sources */,
 				7F7F19DB2632157E00144312 /* SceneDelegate.swift in Sources */,
 			);
