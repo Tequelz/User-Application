@@ -205,6 +205,9 @@
                                 <state key="normal" title="LOGIN">
                                     <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginButton:" destination="kkd-S1-pkx" eventType="touchUpInside" id="Snx-CR-bvZ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2ct-ga-UUz"/>

@@ -1,35 +1,15 @@
-//
-//  RegisterViewController.swift
-//  Login Page
-//
-//
-
 import UIKit
-
-struct Register: Codable{
-    let username: String
-    let email: String
-    let password1: String
-    let password2: String
-}
 
 class RegisterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     @IBOutlet weak var username: UITextField!
-    
     @IBOutlet weak var email: UITextField!
-    
     @IBOutlet weak var password1: UITextField!
-    
-    
     @IBOutlet weak var password2: UITextField!
-    
     
     @IBAction func registerButton(_ sender: Any) {
         
@@ -37,6 +17,7 @@ class RegisterViewController: UIViewController {
         let mail = email.text
         let pw1 = password1.text
         let pw2 = password2.text
+        
         let register = Register(username: user!, email: mail!, password1: pw1!, password2: pw2!)
         guard let uploadData = try? JSONEncoder().encode(register) else{
             return
@@ -62,7 +43,6 @@ class RegisterViewController: UIViewController {
                 let dataString = String(data: data, encoding: .utf8) {
                 print ("got data: \(dataString)")
                 DispatchQueue.main.async {
-                        
                     let story = UIStoryboard(name: "Main",bundle:nil)
                     let controller = story.instantiateViewController(identifier: "Core") as! ViewController
                         controller.modalPresentationStyle = .fullScreen
@@ -72,19 +52,5 @@ class RegisterViewController: UIViewController {
             }
         }
         task.resume()
-        
-        
-        
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
