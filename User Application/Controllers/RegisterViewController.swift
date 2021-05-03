@@ -2,14 +2,26 @@ import UIKit
 
 class RegisterViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    
     
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password1: UITextField!
     @IBOutlet weak var password2: UITextField!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        password1.isSecureTextEntry = true
+        password2.isSecureTextEntry = true
+    }
+    
+    func failed(error: String) {
+        DispatchQueue.main.async {
+            let ac = UIAlertController(title:error, message: nil,preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
+            self.present(ac,animated: true)
+        }
+    }
     
     @IBAction func registerButton(_ sender: Any) {
         
@@ -30,11 +42,13 @@ class RegisterViewController: UIViewController {
         let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
             if let error = error {
                 print ("error: \(error)")
+                self.failed(error: "Error in application side (Try reload app)")
                 return
             }
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
                 print ("server error")
+                self.failed(error: "Error in server side (Please check register details)")
                 return
             }
             if let mimeType = response.mimeType,

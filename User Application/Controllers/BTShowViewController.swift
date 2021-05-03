@@ -28,6 +28,14 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
     
 
     var locationManager : CLLocationManager!
+    
+    func failed(error: String) {
+        DispatchQueue.main.async {
+            let ac = UIAlertController(title:error, message: nil,preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
+            self.present(ac,animated: true)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,11 +52,13 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print ("error: \(error)")
+                self.failed(error: "Error in app side (When getting user details)")
                 return
             }
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
                 print ("server error")
+                self.failed(error: "Error in server side (When getting user details)")
                 return
             }
             if let mimeType = response.mimeType,
@@ -73,27 +83,27 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
         let beacon = beacons.last
            
            if beacons.count > 0 {
-            var minorString = String((beacon?.minor.stringValue)!)
+            let minorString = String((beacon?.minor.stringValue)!)
             print(minorString)
             if beacon?.minor.stringValue.count == 5 {
-                var char1 = minorString[minorString.index(minorString.startIndex,offsetBy: 0)]
+                let char1 = minorString[minorString.index(minorString.startIndex,offsetBy: 0)]
                 self.lecture_number = self.lecture_number+[char1]
-                var char2 = minorString[minorString.index(minorString.startIndex,offsetBy: 1)]
+                let char2 = minorString[minorString.index(minorString.startIndex,offsetBy: 1)]
                 self.lecture_number = self.lecture_number+[char2]
-                var char3 = minorString[minorString.index(minorString.startIndex,offsetBy: 2)]
+                let char3 = minorString[minorString.index(minorString.startIndex,offsetBy: 2)]
                 self.lecture_length = self.lecture_length+[char3]
-                var char4 = minorString[minorString.index(minorString.startIndex,offsetBy: 3)]
+                let char4 = minorString[minorString.index(minorString.startIndex,offsetBy: 3)]
                 self.lecture_length = self.lecture_length+[char4]
-                var char5 = minorString[minorString.index(minorString.startIndex,offsetBy: 4)]
+                let char5 = minorString[minorString.index(minorString.startIndex,offsetBy: 4)]
                 self.lecture_length = self.lecture_length+[char5]
             }else if beacon?.minor.stringValue.count == 4{
                 self.lecture_number = String(minorString[minorString.index(minorString.startIndex,offsetBy: 0)])
                 print(self.lecture_number)
-                var char1 = minorString[minorString.index(minorString.startIndex,offsetBy: 1)]
+                let char1 = minorString[minorString.index(minorString.startIndex,offsetBy: 1)]
                 self.lecture_length = self.lecture_length+[char1]
-                var char2 = minorString[minorString.index(minorString.startIndex,offsetBy: 2)]
+                let char2 = minorString[minorString.index(minorString.startIndex,offsetBy: 2)]
                 self.lecture_length = self.lecture_length+[char2]
-                var char3 = minorString[minorString.index(minorString.startIndex,offsetBy: 3)]
+                let char3 = minorString[minorString.index(minorString.startIndex,offsetBy: 3)]
                 self.lecture_length = self.lecture_length+[char3]
             }
             
@@ -119,12 +129,14 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
                 if let error = error {
                     print ("error: \(error)")
                     self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion())
+                    self.failed(error: "Error in app side (When checking lecture details)")
                     return
                 }
                 guard let response = response as? HTTPURLResponse,
                     (200...299).contains(response.statusCode) else {
                     print ("server error")
                     self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion())
+                    self.failed(error: "Error in server side (When checking lecture details)")
                     return
                 }
                 if let mimeType = response.mimeType,
@@ -156,12 +168,14 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
                                         if let error = error {
                                             print ("error: \(error)")
                                             self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion())
+                                            self.failed(error: "Error in app side (When checking user attendance)")
                                             return
                                         }
                                         guard let response = response as? HTTPURLResponse,
                                             (200...299).contains(response.statusCode) else {
                                             print ("server error")
                                             self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion())
+                                            self.failed(error: "Error in server side (When checking user attendance)")
                                             return
                                         }
                                         if let mimeType = response.mimeType,
