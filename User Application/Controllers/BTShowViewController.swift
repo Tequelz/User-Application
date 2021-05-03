@@ -10,21 +10,15 @@ import CoreLocation
 
 class BTShowViewController: UIViewController, CLLocationManagerDelegate {
     
-    @IBOutlet weak var iBeaconFoundLabel: UILabel!
-        @IBOutlet weak var proximityUUIDLabel: UILabel!
-        @IBOutlet weak var majorLabel: UILabel!
-        @IBOutlet weak var minorLabel: UILabel!
-        @IBOutlet weak var accuracyLabel: UILabel!
-        @IBOutlet weak var distanceLabel: UILabel!
-        @IBOutlet weak var rssiLabel: UILabel!
     
-    
+    @IBOutlet weak var teacherEmailTextBox: UITextField!
     
     var key:String = ""
     var lecture_number = ""
     var lecture_length = ""
     var lecture_id:Int = 0
     var userID:Int = 0
+    var teacherEmail = ""
     
 
     var locationManager : CLLocationManager!
@@ -36,6 +30,16 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
             self.present(ac,animated: true)
         }
     }
+    
+    func success(notif: String) {
+        DispatchQueue.main.async {
+            let ac = UIAlertController(title:notif, message: nil,preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
+            self.present(ac,animated: true)
+        }
+    }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,12 +76,26 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
             }
         }
         task.resume()
-        locationManager = CLLocationManager.init()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        startScanningForBeaconRegion(beaconRegion: getBeaconRegion())
+        
+        self.teacherEmail = teacherEmailTextBox.text!
         // Do any additional setup after loading the view.
     }
+    
+    
+    @IBAction func searchButton(_ sender: Any) {
+        self.teacherEmail = teacherEmailTextBox.text!
+        self.success(notif: "Began searching for teacher with email \(self.teacherEmail)")
+        if self.teacherEmail == "" {
+            self.failed(error: "You didnt enter a teacher's email correctly, for connection please enter the email of your teacher")
+        }else{
+            locationManager = CLLocationManager.init()
+            locationManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+            startScanningForBeaconRegion(beaconRegion: getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: getBeaconIdentityConstraint())
+            
+        }
+    }
+    
     
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         let beacon = beacons.last
@@ -128,14 +146,14 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
             let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
                 if let error = error {
                     print ("error: \(error)")
-                    self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion())
+                    self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
                     self.failed(error: "Error in app side (When checking lecture details)")
                     return
                 }
                 guard let response = response as? HTTPURLResponse,
                     (200...299).contains(response.statusCode) else {
                     print ("server error")
-                    self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion())
+                    self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
                     self.failed(error: "Error in server side (When checking lecture details)")
                     return
                 }
@@ -167,14 +185,14 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
                                     let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
                                         if let error = error {
                                             print ("error: \(error)")
-                                            self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion())
+                                            self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
                                             self.failed(error: "Error in app side (When checking user attendance)")
                                             return
                                         }
                                         guard let response = response as? HTTPURLResponse,
                                             (200...299).contains(response.statusCode) else {
                                             print ("server error")
-                                            self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion())
+                                            self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
                                             self.failed(error: "Error in server side (When checking user attendance)")
                                             return
                                         }
@@ -183,7 +201,7 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
                                             let data = data,
                                             let dataString = String(data: data, encoding: .utf8) {
                                             print ("got data: \(dataString)")
-                                            self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion())
+                                            self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
                                             DispatchQueue.main.async {
                                                     
                                                 let story = UIStoryboard(name: "Main",bundle:nil)
@@ -202,61 +220,28 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
                 }
             }
             task.resume()
-            
-//               iBeaconFoundLabel.text = "Yes"
-//               proximityUUIDLabel.text = beacon?.proximityUUID.uuidString
-//               majorLabel.text = beacon?.major.stringValue
-//               minorLabel.text = beacon?.minor.stringValue
-//               accuracyLabel.text = String(describing: beacon?.accuracy)
-//               if beacon?.proximity == CLProximity.unknown {
-//                   distanceLabel.text = "Unknown Proximity"
-//               } else if beacon?.proximity == CLProximity.immediate {
-//                   distanceLabel.text = "Immediate Proximity"
-//               } else if beacon?.proximity == CLProximity.near {
-//                   distanceLabel.text = "Near Proximity"
-//               } else if beacon?.proximity == CLProximity.far {
-//                   distanceLabel.text = "Far Proximity"
-//               }
-//               rssiLabel.text = String(describing: beacon?.rssi)
-           } else {
-               iBeaconFoundLabel.text = "No"
-               proximityUUIDLabel.text = ""
-               majorLabel.text = ""
-               minorLabel.text = ""
-               accuracyLabel.text = ""
-               distanceLabel.text = ""
-               rssiLabel.text = ""
            }
-//
-//           print("Ranging")
     }
     
-    func getBeaconRegion() -> CLBeaconRegion {
-        let beaconRegion = CLBeaconRegion.init(proximityUUID: UUID.init(uuidString: "E06F95E4-FCFC-42C6-B4F8-F6BAE87EA1A0")!,
-                                               identifier: "teacher1")
+    func getBeaconRegion(teacher: String) -> CLBeaconRegion {
+        let uuid = UUID(uuidString: "E06F95E4-FCFC-42C6-B4F8-F6BAE87EA1A0")
+        let beaconRegion = CLBeaconRegion.init(uuid: uuid!, identifier: teacher)
         return beaconRegion
     }
     
-    func startScanningForBeaconRegion(beaconRegion: CLBeaconRegion) {
+    func getBeaconIdentityConstraint() -> CLBeaconIdentityConstraint {
+        let uuid = UUID(uuidString: "E06F95E4-FCFC-42C6-B4F8-F6BAE87EA1A0")
+        let beaconIdentityConstraint = CLBeaconIdentityConstraint.init(uuid: uuid!)
+        return beaconIdentityConstraint
+    }
+    
+    func startScanningForBeaconRegion(beaconRegion: CLBeaconRegion, beaconConstraint: CLBeaconIdentityConstraint) {
         locationManager.startMonitoring(for: beaconRegion)
-        locationManager.startRangingBeacons(in: beaconRegion)
+        locationManager.startRangingBeacons(satisfying: beaconConstraint)
     }
     
-    func stopScanningForBeaconRegion(beaconRegion: CLBeaconRegion){
+    func stopScanningForBeaconRegion(beaconRegion: CLBeaconRegion, beaconConstraint: CLBeaconIdentityConstraint){
         locationManager.stopMonitoring(for: beaconRegion)
-        locationManager.stopRangingBeacons(in: beaconRegion)
+        locationManager.stopRangingBeacons(satisfying: beaconConstraint)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-
 }

@@ -21,14 +21,14 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButton(_ sender: Any) {
-                let user = username.text
-                let mail = email.text
-                let pass = password.text
-//                let user = "sc17gt"
-//                let mail = "sc17gt@leeds.ac.uk"
-//                let pass = "hellothere123"
+//                let user = username.text
+//                let mail = email.text
+//                let pass = password.text
+                let user = "sc17gt"
+                let mail = "sc17gt@leeds.ac.uk"
+                let pass = "user1@123"
 //        
-                let login = Login(username: user!, email : mail!, password : pass!)
+                let login = Login(username: user, email : mail, password : pass)
                 guard let uploadData = try? JSONEncoder().encode(login) else {
                     return
                 }
