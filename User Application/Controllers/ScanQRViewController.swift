@@ -29,7 +29,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             self.present(ac,animated: true)
         }
     }
-
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -90,24 +90,8 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+
     
-    func scanFailed() {
-        DispatchQueue.main.async {
-            let ac = UIAlertController(title:"Scan Failed", message: nil,preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
-            self.present(ac,animated: true)
-            self.captureSession = nil
-        }
-    }
-    
-    
-    func successfulLogin(){
-        DispatchQueue.main.async {
-            let ac = UIAlertController(title: "LOGGED IN SUCCESSFULLY", message: nil, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Close APP", style: .default))
-            self.present(ac,animated: true)
-        }
-    }
     
     func setupCaptureSession(){
         self.captureSession = AVCaptureSession()
@@ -123,7 +107,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         if (self.captureSession.canAddInput(videoInput)){
             self.captureSession.addInput(videoInput)
         }else{
-            self.scanFailed()
+            self.failed(error: "Scan Failed")
             return
         }
         
@@ -135,7 +119,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
         }else{
-            self.scanFailed()
+            self.failed(error: "Scan Failed")
             return
         }
         
@@ -143,12 +127,9 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         self.previewLayer?.frame = view.layer.bounds
         self.previewLayer?.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer!)
-        
         self.qrCodeBounds.alpha = 0
         self.headerBanner.addSubview(self.qrCodeBounds)
-        
         self.captureSession.startRunning()
-        
         view.bringSubviewToFront(lowerBanner)
         view.bringSubviewToFront(headerBanner)
     }
@@ -157,25 +138,11 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         return UIStatusBarStyle.lightContent
     }
     
-    func showQRCodeBounds(frame: CGRect?){
-        guard let frame = frame else{
-            return
-        }
-        
-        self.qrCodeBounds.layer.removeAllAnimations()
-        self.qrCodeBounds.alpha = 1
-        self.qrCodeBounds.frame = frame
-        UIView.animate(withDuration:0.2,delay: 1,options: [],animations: {
-            self.qrCodeBounds.alpha = 0
-        })
-    }
+
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         captureSession.stopRunning()
-        
-        let jsonData = key.data(using: .utf8)!
-        let authKey: AuthKey = try! JSONDecoder().decode(AuthKey.self, from: jsonData)
-        
+    
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else {return}
             guard let stringValue = readableObject.stringValue else {return}
@@ -185,11 +152,11 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
                 self.lowerBanner.text = stringValue
             }
             
-            let qrCodeObject = self.previewLayer?.transformedMetadataObject(for: readableObject)
-            self.showQRCodeBounds(frame: qrCodeObject?.bounds)
-            
-            let jsonData = stringValue.data(using: .utf8)!
-            let lecData: LectureData = try! JSONDecoder().decode(LectureData.self, from: jsonData)
+            let jsonData = key.data(using: .utf8)!
+            let authKey: AuthKey = try! JSONDecoder().decode(AuthKey.self, from: jsonData)
+
+            let qrData = stringValue.data(using: .utf8)!
+            let lecData: LectureData = try! JSONDecoder().decode(LectureData.self, from: qrData)
             print(lecData)
             
             guard let uploadData = try? JSONEncoder().encode(lecData)else{

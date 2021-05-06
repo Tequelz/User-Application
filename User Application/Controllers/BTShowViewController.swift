@@ -1,10 +1,3 @@
-//
-//  BTShowViewController.swift
-//  User Application
-//
-//  Created by John Doe on 02/05/2021.
-//
-
 import UIKit
 import CoreLocation
 

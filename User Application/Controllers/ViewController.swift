@@ -7,11 +7,6 @@ struct Login: Codable {
     let password:String
     
 }
-struct Key: Decodable{
-    
-    let key:String
-    
-}
 struct Register: Codable{
     let username: String
     let email: String
@@ -39,10 +34,6 @@ struct UserAttend: Codable{
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
     @IBAction func loginButton(_ sender: Any) {
         DispatchQueue.main.async {
             let story = UIStoryboard(name: "Main",bundle:nil)
@@ -62,8 +53,7 @@ class ViewController: UIViewController {
                 self.present(controller, animated: true, completion: nil)
         }
     }
-    
-    
+
 }
 
 

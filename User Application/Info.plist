@@ -70,5 +70,7 @@
 	<string>Can use Bluetooth</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Used to scan iBeacons</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

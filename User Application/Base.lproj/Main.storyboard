@@ -43,7 +43,7 @@
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="loginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fDl-uq-D5U"/>
+                                    <action selector="loginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EDX-7W-b0M"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -131,7 +131,6 @@
                                     <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="buttonLog:" destination="kkd-S1-pkx" eventType="touchUpInside" id="F59-ro-EqC"/>
                                     <action selector="registerButton:" destination="pQH-tG-hTV" eventType="touchUpInside" id="hWw-CU-ibH"/>
                                 </connections>
                             </button>
@@ -155,7 +154,7 @@
         <scene sceneID="zdm-7b-Lir">
             <objects>
                 <viewController storyboardIdentifier="Login" id="kkd-S1-pkx" customClass="LoginViewController" customModule="User_Application" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ORu-dQ-OTY">
+                    <view key="view" contentMode="scaleToFill" id="ORu-dQ-OTY" customClass="LoginV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -215,7 +214,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="1Bp-n3-LAm"/>
                     <connections>
-                        <outlet property="buttonLog" destination="uDU-U4-8P5" id="avR-3p-22n"/>
                         <outlet property="email" destination="FZe-xm-3yG" id="UZO-uC-QNy"/>
                         <outlet property="password" destination="zBT-GL-PdF" id="uW6-m4-pMa"/>
                         <outlet property="username" destination="3XU-3S-1Lh" id="Al1-fm-zKo"/>
