@@ -9,11 +9,9 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
     var key:String = ""
     var lecture_number = ""
     var lecture_length = ""
+    var teacherEmail = ""
     var lecture_id:Int = 0
     var userID:Int = 0
-    var teacherEmail = ""
-    
-
     var locationManager : CLLocationManager!
     
     func failed(error: String) {
@@ -24,27 +22,12 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func success(notif: String) {
-        DispatchQueue.main.async {
-            let ac = UIAlertController(title:notif, message: nil,preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
-            self.present(ac,animated: true)
-        }
-    }
-    
-    
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let jsonData = key.data(using: .utf8)!
-        let authKey: AuthKey = try! JSONDecoder().decode(AuthKey.self, from: jsonData)
-        
+    func getUser(){
         let url = URL(string: "https://project-api-sc17gt.herokuapp.com/rest-auth/user/")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Token " + authKey.key, forHTTPHeaderField: "Authorization")
+        request.setValue("Token " + self.key, forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -60,42 +43,28 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
             }
             if let mimeType = response.mimeType,
                 mimeType == "application/json",
-                let data = data,
-                let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments){
-                if let jsonArray = jsonObj as? NSDictionary{
-                    let userID = jsonArray.value(forKey: "pk")
-                    self.userID = userID as! Int
-                }
+                let data = data{
+                self.getUserPK(data: data)
             }
+                
         }
         task.resume()
-        
-        self.teacherEmail = teacherEmailTextBox.text!
-        // Do any additional setup after loading the view.
     }
     
-    
-    @IBAction func searchButton(_ sender: Any) {
-        self.teacherEmail = teacherEmailTextBox.text!
-        self.success(notif: "Began searching for teacher with email \(self.teacherEmail)")
-        if self.teacherEmail == "" {
-            self.failed(error: "You didnt enter a teacher's email correctly, for connection please enter the email of your teacher")
-        }else{
-            locationManager = CLLocationManager.init()
-            locationManager.delegate = self
-            locationManager.requestWhenInUseAuthorization()
-            startScanningForBeaconRegion(beaconRegion: getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: getBeaconIdentityConstraint())
-            
+    func getUserPK(data: Data){
+        if let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments){
+            if let jsonArray = jsonObj as? NSDictionary{
+                let userID = jsonArray.value(forKey: "pk")
+                self.userID = userID as! Int
+            }
         }
     }
-    
     
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         let beacon = beacons.last
            
            if beacons.count > 0 {
             let minorString = String((beacon?.minor.stringValue)!)
-            print(minorString)
             if beacon?.minor.stringValue.count == 5 {
                 let char1 = minorString[minorString.index(minorString.startIndex,offsetBy: 0)]
                 self.lecture_number = self.lecture_number+[char1]
@@ -118,102 +87,102 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
                 self.lecture_length = self.lecture_length+[char3]
             }
             
-            let jsonData = key.data(using: .utf8)!
-            let authKey: AuthKey = try! JSONDecoder().decode(AuthKey.self, from: jsonData)
-            
-            
-            print(self.lecture_length)
-            print(self.lecture_number)
-            
             let lecture = LectureData(lec_id: Int(beacon!.major), lec_number: Int(self.lecture_number)!, lec_length: Int(self.lecture_length)!)
             guard let uploadData = try? JSONEncoder().encode(lecture) else {
                 return
             }
+            self.lectureCheck(uploadData: uploadData)
+           }
+    }
+    
+    func lectureCheck(uploadData: Data){
+        let url = URL(string: "https://project-api-sc17gt.herokuapp.com/lecture-check/")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Token " + self.key, forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
+            if let error = error {
+                self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
+                self.failed(error: "Error in app side (When checking lecture details)")
+                return
+            }
+            guard let response = response as? HTTPURLResponse,
+                (200...299).contains(response.statusCode) else {
+                self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
+                self.failed(error: "Error in server side (When checking lecture details)")
+                return
+            }
+            if let mimeType = response.mimeType,
+                mimeType == "application/json",
+                let data = data{
+                    self.getLectureID(data: data)
+                    let userAttend = UserAttend(username:self.userID, lecture_id: self.lecture_id)
+                    print(userAttend)
+                    
+                    guard let uploadData = try? JSONEncoder().encode(userAttend)else{
+                        return
+                    }
+                self.userAttend(uploadData: uploadData)
             
-            let url = URL(string: "https://project-api-sc17gt.herokuapp.com/lecture-check/")!
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.setValue("Token " + authKey.key, forHTTPHeaderField: "Authorization")
-            
-            let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
-                if let error = error {
-                    print ("error: \(error)")
-                    self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
-                    self.failed(error: "Error in app side (When checking lecture details)")
-                    return
-                }
-                guard let response = response as? HTTPURLResponse,
-                    (200...299).contains(response.statusCode) else {
-                    print ("server error")
-                    self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
-                    self.failed(error: "Error in server side (When checking lecture details)")
-                    return
-                }
-                if let mimeType = response.mimeType,
-                    mimeType == "application/json",
-                    let data = data,
-                    let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments){
-                    if let jsonArray = jsonObj as? NSArray{
-                        for obj in jsonArray{
-                            if let objDict = obj as? NSDictionary{
-                                if let lecture_id = objDict.value(forKey: "pk"){
-                                self.lecture_id = lecture_id as! Int
-                                    print(self.lecture_id)
-                                    
-                                    let userAttend = UserAttend(username:self.userID, lecture_id: self.lecture_id)
-                                    print(userAttend)
-                                    
-                                    guard let uploadData = try? JSONEncoder().encode(userAttend)else{
-                                        return
-                                    }
-                                    print(uploadData)
-                                    
-                                    let url = URL(string: "https://project-api-sc17gt.herokuapp.com/user-attend/")!
-                                    var request = URLRequest(url: url)
-                                    request.httpMethod = "POST"
-                                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                                    request.setValue("Token " + authKey.key, forHTTPHeaderField: "Authorization")
-                                    
-                                    let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
-                                        if let error = error {
-                                            print ("error: \(error)")
-                                            self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
-                                            self.failed(error: "Error in app side (When checking user attendance)")
-                                            return
-                                        }
-                                        guard let response = response as? HTTPURLResponse,
-                                            (200...299).contains(response.statusCode) else {
-                                            print ("server error")
-                                            self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
-                                            self.failed(error: "Error in server side (When checking user attendance)")
-                                            return
-                                        }
-                                        if let mimeType = response.mimeType,
-                                            mimeType == "application/json",
-                                            let data = data,
-                                            let dataString = String(data: data, encoding: .utf8) {
-                                            print ("got data: \(dataString)")
-                                            self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
-                                            DispatchQueue.main.async {
-                                                    
-                                                let story = UIStoryboard(name: "Main",bundle:nil)
-                                                let controller = story.instantiateViewController(identifier: "LoggedIn") as! UIViewController
-                                                    controller.modalPresentationStyle = .fullScreen
-                                                    controller.modalTransitionStyle = .crossDissolve
-                                                    self.present(controller, animated: true, completion: nil)
-                                            }
-                                        }
-                                    }
-                                    task.resume()
-                                }
-                            }
-                        }
+            }
+        }
+        task.resume()
+    }
+    
+    func getLectureID(data: Data){
+        if let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments){
+        if let jsonArray = jsonObj as? NSArray{
+            for obj in jsonArray{
+                if let objDict = obj as? NSDictionary{
+                    if let lecture_id = objDict.value(forKey: "pk"){
+                    self.lecture_id = lecture_id as! Int
                     }
                 }
             }
-            task.resume()
-           }
+    }
+        }
+    }
+    
+    func userAttend(uploadData: Data){
+        let url = URL(string: "https://project-api-sc17gt.herokuapp.com/user-attend/")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Token " + self.key, forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
+            if let error = error {
+                print ("error: \(error)")
+                //self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
+                self.failed(error: "Error in app side (When checking user attendance)")
+                return
+            }
+            guard let response = response as? HTTPURLResponse,
+                (200...299).contains(response.statusCode) else {
+                print ("server error")
+                //self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
+                self.failed(error: "Error in server side (When checking user attendance)")
+                return
+            }
+            if let mimeType = response.mimeType,
+                mimeType == "application/json",
+                let data = data,
+                let dataString = String(data: data, encoding: .utf8) {
+                print ("got data: \(dataString)")
+                //self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
+                DispatchQueue.main.async {
+                        
+                    let story = UIStoryboard(name: "Main",bundle:nil)
+                    let controller = story.instantiateViewController(identifier: "LoggedIn") as! UIViewController
+                        controller.modalPresentationStyle = .fullScreen
+                        controller.modalTransitionStyle = .crossDissolve
+                        self.present(controller, animated: true, completion: nil)
+                }
+            }
+        }
+        task.resume()
     }
     
     func getBeaconRegion(teacher: String) -> CLBeaconRegion {
@@ -237,4 +206,27 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.stopMonitoring(for: beaconRegion)
         locationManager.stopRangingBeacons(satisfying: beaconConstraint)
     }
+        
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.getUser()
+        self.teacherEmail = teacherEmailTextBox.text!
+        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func searchButton(_ sender: Any) {
+        self.teacherEmail = teacherEmailTextBox.text!
+        self.failed(error: "Began searching for teacher with email \(self.teacherEmail)")
+        if self.teacherEmail == "" {
+            self.failed(error: "You didnt enter a teacher's email correctly, for connection please enter the email of your teacher")
+        }else{
+            locationManager = CLLocationManager.init()
+            locationManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+            startScanningForBeaconRegion(beaconRegion: getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: getBeaconIdentityConstraint())
+            
+        }
+    }
+    
 }
