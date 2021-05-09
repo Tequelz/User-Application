@@ -1,12 +1,12 @@
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController { //This class is used to take in the users login information and then log them in providing them with a Token
     
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var email: UITextField!
-    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var password: UITextField! //Three outlets that allow the data entered in the text fields to be retrieved from the storyboard
 
-    func failed(error: String) {
+    func failed(error: String) { // This function is used to produce a pop up that lets the user know about an error
         DispatchQueue.main.async {
             let ac = UIAlertController(title:error, message: nil,preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func loginAPI(uploadData: Data){
+    func loginAPI(uploadData: Data){ //This function takes in some data and attempts to log a user in, if works correctly the user's token is found and then the next TechChoice view is loaded passing along the value of token
         let url = URL(string: "https://project-api-sc17gt.herokuapp.com/rest-auth/login/")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -49,12 +49,12 @@ class LoginViewController: UIViewController {
         task.resume()
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad() {//This function just sets the password field to be blacked out
         super.viewDidLoad()
         password.isSecureTextEntry = true
     }
     
-    @IBAction func loginButton(_ sender: Any) {
+    @IBAction func loginButton(_ sender: Any) { // This function allows the user to login by getting the information entred within the text fields and then packaging this into a Login instance with this data being encoded and then sent via the loginAPI function
 //                let user = username.text
 //                let mail = email.text
 //                let pass = password.text

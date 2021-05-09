@@ -1,17 +1,18 @@
 import UIKit
-import AVFoundation
+import AVFoundation //Class begins by importing the AVFoundation framework allowing the methods within to be used
 
-class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate { //This class will provide the user with a scanner that can take in and decipher QR code information and then generate a LectureSession request for logging in
     
-    @IBOutlet weak var cameraContainerConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var cameraContainerConstraint: NSLayoutConstraint!
     
-    var captureSession: AVCaptureSession!
-    var previewLayer: AVCaptureVideoPreviewLayer?
-    var key:String = ""
+    var key:String = "" //The token is passed through from the previous controller
     var lecture_id:Int = 0
-    var userID:Int = 0
+    var userID:Int = 0//These two values will be used to create the LectureSession request in the class
+    var captureSession: AVCaptureSession!
+    var previewLayer: AVCaptureVideoPreviewLayer? //These are two core variables that are needed to create the scanner, the capture session allows for the management of what happens with the camera, and the preview layer allows the user to visually see this camera
+
     
-    func failed(error: String) {
+    func failed(error: String) {// This function is used to produce a pop up that lets the user know about an error
         DispatchQueue.main.async {
             let ac = UIAlertController(title:error, message: nil,preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
@@ -19,7 +20,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         }
     }
     
-    func getUserID(){
+    func getUserID(){ //This function retrieves the users details via a request to the rest-auth/user path, here the data returned can provide the current users infromation which is required to make a LectureSession, this data is passed in to getUserPK so the primary key can be obtained
         let url = URL(string: "https://project-api-sc17gt.herokuapp.com/rest-auth/user/")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -45,7 +46,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         task.resume()
     }
     
-    func getUserPK(data:Data){
+    func getUserPK(data:Data){ //This function takes in some data which is then converted into a JSONObject, this object is then made into an NSDictionary which means the pk value can be found and the instance variable userID can be set
         if let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments){
             if let jsonArray = jsonObj as? NSDictionary{
                 let userID = jsonArray.value(forKey: "pk")
@@ -54,7 +55,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         }
     }
     
-    func cameraCheck(){
+    func cameraCheck(){ //This function does the checks required to make sure that the camera can be initalised and displayed on the screen, with the setupCaptureSession being called if possible
         self.view.backgroundColor = UIColor.black
         
         switch AVCaptureDevice.authorizationStatus(for: .video){
@@ -76,7 +77,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         }
     }
     
-    func setupCaptureSession(){
+    func setupCaptureSession(){ //This function creates the capture session as well as the output and input which it then links all together allowing the session to manage the innner workings. The input is an AVCaptureDeviceInput instance and provides the input image for the session, and the output is a AVCaptureMetadataOutput allowing the data to be obtained from the image and converted into a qr. If worked correctly the previewLayer is set to show the capture session with this taking up the whole screen, finally the capture session is then set to running
         self.captureSession = AVCaptureSession()
         
         guard let videoCaptureDevice = AVCaptureDevice.default(.builtInWideAngleCamera,for:.video,position: .back)else {return}
@@ -115,7 +116,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         
     }
     
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) { //This function manages what happens when the output is given some data, the first is stopping the capture session meaning no more data can be retrieved from the camera. After this the data is converted into a readable metadata object and then to a string representation that is passed into lecture check as data
         captureSession.stopRunning()
     
         if let metadataObject = metadataObjects.first {
@@ -127,7 +128,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         }
     }
     
-    func lectureCheck(uploadData: Data){
+    func lectureCheck(uploadData: Data){ //This function takes in some data and finds the corresponding lectyure that matches the entered informqation. Once complete a UserAttend instance is made containing the lectures id and the user id. Here the data is then encoded and passed into the lectureAttend function
         let url = URL(string: "https://project-api-sc17gt.herokuapp.com/lecture-check/")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -162,7 +163,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         task.resume()
     }
     
-    func getLectureID(data: Data){
+    func getLectureID(data: Data){ //This function takes in some data and then proceeds to convert the data into a dictionary which allows for the lectures primary key to be retrieved for use in the tracking of attendance
         if let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments){
         if let jsonArray = jsonObj as? NSArray{
             for obj in jsonArray{
@@ -176,7 +177,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     }
     }
     
-    func lectureAttend(uploadData: Data){
+    func lectureAttend(uploadData: Data){ //This function creates the request that logs the user in, taking data from the lectureCheck function and sending it to the user-attend path, if the correct information is returned the LoggedIn splash screen appears as the user is now logged in
         let url = URL(string: "https://project-api-sc17gt.herokuapp.com/user-attend/")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -210,7 +211,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         task.resume()
     }
  
-    override func viewDidLoad() {
+    override func viewDidLoad() { //When the view is loaded the userID is retrieved using the getUserID function and the camera is checked to see whether it is functional
         super.viewDidLoad()
         self.getUserID()
         self.cameraCheck()
@@ -220,9 +221,9 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         super.didReceiveMemoryWarning()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle{
-        return UIStatusBarStyle.lightContent
-    }
+//    override var preferredStatusBarStyle: UIStatusBarStyle{
+//        return UIStatusBarStyle.lightContent
+//    }
     
 }
 
