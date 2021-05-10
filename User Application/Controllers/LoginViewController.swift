@@ -55,14 +55,12 @@ class LoginViewController: UIViewController { //This class is used to take in th
     }
     
     @IBAction func loginButton(_ sender: Any) { // This function allows the user to login by getting the information entred within the text fields and then packaging this into a Login instance with this data being encoded and then sent via the loginAPI function
-//                let user = username.text
-//                let mail = email.text
-//                let pass = password.text
-        let user = "sc17gt"
-        let mail = "sc17gt@leeds.ac.uk"
-        let pass = "user1@123"
+        let user = username.text!
+                let mail = email.text
+                let pass = password.text
 
-        let login = Login(username: user, email : mail, password : pass)
+
+        let login = Login(username: user, email : mail!, password : pass!)
         guard let uploadData = try? JSONEncoder().encode(login) else {
             return
         }
