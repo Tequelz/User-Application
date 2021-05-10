@@ -7,7 +7,7 @@ class RegisterViewController: UIViewController {//This class is used to take in 
     @IBOutlet weak var password1: UITextField!
     @IBOutlet weak var password2: UITextField!//Four outlets that allow the data entered in the text fields to be retrieved from the storyboard
     
-    func failed(error: String) {// This function is used to produce a pop up that lets the user know about an error
+    func popUp(error: String) {// This function is used to produce a pop up that lets the user know about an error
         DispatchQueue.main.async {
             let ac = UIAlertController(title:error, message: nil,preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
@@ -23,12 +23,12 @@ class RegisterViewController: UIViewController {//This class is used to take in 
         
         let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
             if let error = error {
-                self.failed(error: "Error in application side (Try reload app) Error: \(error)")
+                self.popUp(error: "Error in application side (Try reload app) Error: \(error)")
                 return
             }
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
-                self.failed(error: "Error in server side (Please check register details)")
+                self.popUp(error: "Error in server side (Please check register details)")
                 return
             }
             if let mimeType = response.mimeType,

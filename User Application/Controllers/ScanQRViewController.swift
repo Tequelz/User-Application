@@ -12,7 +12,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     var previewLayer: AVCaptureVideoPreviewLayer? //These are two core variables that are needed to create the scanner, the capture session allows for the management of what happens with the camera, and the preview layer allows the user to visually see this camera
 
     
-    func failed(error: String) {// This function is used to produce a pop up that lets the user know about an error
+    func popUp(error: String) {// This function is used to produce a pop up that lets the user know about an error
         DispatchQueue.main.async {
             let ac = UIAlertController(title:error, message: nil,preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
@@ -29,12 +29,12 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                self.failed(error: "Error in app side (When getting user details) Error: \(error)")
+                self.popUp(error: "Error in app side (When getting user details) Error: \(error)")
                 return
             }
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
-                self.failed(error: "Error in server side (When getting user details)")
+                self.popUp(error: "Error in server side (When getting user details)")
                 return
             }
             if let mimeType = response.mimeType,
@@ -91,7 +91,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         if (self.captureSession.canAddInput(videoInput)){
             self.captureSession.addInput(videoInput)
         }else{
-            self.failed(error: "Scan Failed")
+            self.popUp(error: "Scan Failed")
             return
         }
         
@@ -103,7 +103,7 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
         }else{
-            self.failed(error: "Scan Failed")
+            self.popUp(error: "Scan Failed")
             return
         }
         DispatchQueue.main.async {
@@ -137,12 +137,12 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         
         let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
             if let error = error {
-                self.failed(error: "Error in app side (When checking lecture details)")
+                self.popUp(error: "Error in app side (When checking lecture details)")
                 return
             }
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
-                self.failed(error: "Error in server side (When checking lecture details)")
+                self.popUp(error: "Error in server side (When checking lecture details)")
                 return
             }
             if let mimeType = response.mimeType,
@@ -186,12 +186,12 @@ class ScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         
         let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
             if let error = error {
-                self.failed(error: "Error in app side (When trying to add user to lecture session)")
+                self.popUp(error: "Error in app side (When trying to add user to lecture session)")
                 return
             }
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
-                self.failed(error: "Error in server side (When trying to add user to lecture session)")
+                self.popUp(error: "Error in server side (When trying to add user to lecture session)")
                 return
             }
             if let mimeType = response.mimeType,

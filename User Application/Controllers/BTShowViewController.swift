@@ -14,7 +14,7 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate { //This
     var userID:Int = 0 //These values are used to create the LectureSession object on the API
     var locationManager : CLLocationManager! //The CoreLocationLocationManager is made here which manages all aspects of the finding of iBeacon signals
     
-    func failed(error: String) {// This function is used to produce a pop up that lets the user know about an error
+    func popUp(error: String) {// This function is used to produce a pop up that lets the user know about an error
         DispatchQueue.main.async {
             let ac = UIAlertController(title:error, message: nil,preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
@@ -32,13 +32,13 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate { //This
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print ("error: \(error)")
-                self.failed(error: "Error in app side (When getting user details)")
+                self.popUp(error: "Error in app side (When getting user details)")
                 return
             }
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
                 print ("server error")
-                self.failed(error: "Error in server side (When getting user details)")
+                self.popUp(error: "Error in server side (When getting user details)")
                 return
             }
             if let mimeType = response.mimeType,
@@ -105,13 +105,13 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate { //This
         let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
             if let error = error {
                 self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
-                self.failed(error: "Error in app side (When checking lecture details)")
+                self.popUp(error: "Error in app side (When checking lecture details)")
                 return
             }
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
                 self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
-                self.failed(error: "Error in server side (When checking lecture details)")
+                self.popUp(error: "Error in server side (When checking lecture details)")
                 return
             }
             if let mimeType = response.mimeType,
@@ -156,14 +156,14 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate { //This
             if let error = error {
                 print ("error: \(error)")
                 //self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
-                self.failed(error: "Error in app side (When checking user attendance)")
+                self.popUp(error: "Error in app side (When checking user attendance)")
                 return
             }
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
                 print ("server error")
                 //self.stopScanningForBeaconRegion(beaconRegion: self.getBeaconRegion(teacher: self.teacherEmail), beaconConstraint: self.getBeaconIdentityConstraint())
-                self.failed(error: "Error in server side (When checking user attendance)")
+                self.popUp(error: "Error in server side (When checking user attendance)")
                 return
             }
             if let mimeType = response.mimeType,
@@ -216,9 +216,9 @@ class BTShowViewController: UIViewController, CLLocationManagerDelegate { //This
     
     @IBAction func searchButton(_ sender: Any) { //This button allows for the program to begin searching for the beacons that match the entered information, it begins by retrieveing and then checking the teacher's email to see if its valid, if it is then the Location Manager is initalised, followed by the setting of delegates and authorization for this view. Once done the startScanningForBeaconRegion is called starting the search with the entered infromation
         self.teacherEmail = teacherEmailTextBox.text!
-        self.failed(error: "Began searching for teacher with email \(self.teacherEmail)")
+        //self.popUp(error: "Began searching for teacher with email \(self.teacherEmail)")
         if self.teacherEmail == "" {
-            self.failed(error: "You didnt enter a teacher's email correctly, for connection please enter the email of your teacher")
+            self.popUp(error: "You didnt enter a teacher's email correctly, for connection please enter the email of your teacher")
         }else{
             locationManager = CLLocationManager.init()
             locationManager.delegate = self

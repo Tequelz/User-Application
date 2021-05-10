@@ -20,7 +20,6 @@
 		7F7F1A1926322E4200144312 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1A1826322E4200144312 /* RegisterViewController.swift */; };
 		7F7F1A1E2634D97000144312 /* ScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F1A1D2634D97000144312 /* ScanQRViewController.swift */; };
 		7F9FC01C263EF81A002979A1 /* BTShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9FC01B263EF81A002979A1 /* BTShowViewController.swift */; };
-		7FF8AAC92644C43C007D1924 /* QRBTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8AAC82644C43C007D1924 /* QRBTViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +59,6 @@
 		7F7F1A1826322E4200144312 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		7F7F1A1D2634D97000144312 /* ScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRViewController.swift; sourceTree = "<group>"; };
 		7F9FC01B263EF81A002979A1 /* BTShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTShowViewController.swift; sourceTree = "<group>"; };
-		7FF8AAC82644C43C007D1924 /* QRBTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRBTViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +95,6 @@
 				7F7F1A1D2634D97000144312 /* ScanQRViewController.swift */,
 				7F31499A263EEE7700CBFF21 /* TechChoiceViewController.swift */,
 				7F9FC01B263EF81A002979A1 /* BTShowViewController.swift */,
-				7FF8AAC82644C43C007D1924 /* QRBTViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -286,7 +283,6 @@
 			files = (
 				7F7F1A1426321EFA00144312 /* LoginViewController.swift in Sources */,
 				7F7F1A1926322E4200144312 /* RegisterViewController.swift in Sources */,
-				7FF8AAC92644C43C007D1924 /* QRBTViewController.swift in Sources */,
 				7F7F19DD2632157E00144312 /* ViewController.swift in Sources */,
 				7F9FC01C263EF81A002979A1 /* BTShowViewController.swift in Sources */,
 				7F7F1A1E2634D97000144312 /* ScanQRViewController.swift in Sources */,

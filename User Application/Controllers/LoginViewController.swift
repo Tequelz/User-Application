@@ -6,7 +6,7 @@ class LoginViewController: UIViewController { //This class is used to take in th
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField! //Three outlets that allow the data entered in the text fields to be retrieved from the storyboard
 
-    func failed(error: String) { // This function is used to produce a pop up that lets the user know about an error
+    func popUp(error: String) { // This function is used to produce a pop up that lets the user know about an error
         DispatchQueue.main.async {
             let ac = UIAlertController(title:error, message: nil,preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Dismiss", style: .default))
@@ -22,12 +22,12 @@ class LoginViewController: UIViewController { //This class is used to take in th
         
         let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
             if let error = error {
-                self.failed(error: "Error in app side (When getting logging in) Error: \(error)")
+                self.popUp(error: "Error in app side (When getting logging in) Error: \(error)")
                 return
             }
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
-                self.failed(error: "Error in server side (When getting logging in)")
+                self.popUp(error: "Error in server side (When getting logging in)")
                 return
             }
             if let mimeType = response.mimeType,
